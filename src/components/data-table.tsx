@@ -8,7 +8,9 @@ import {
   type SortingState,
   type VisibilityState,
   type TableMeta,
+  type Header,
 } from "@tanstack/react-table"
+import "@/lib/table-types"
 import {
   Table,
   TableBody,
@@ -59,6 +61,14 @@ export function DataTable<T>({
   tableId,
   meta: tableMeta,
 }: DataTableProps<T>) {
+  const getHeaderLabel = (header: Header<T, unknown>) => {
+    if (header.isPlaceholder) return null
+    const rendered = flexRender(header.column.columnDef.header, header.getContext())
+    const unit = header.column.columnDef.meta?.unit
+    if (unit) return <>{rendered} ({unit})</>
+    return rendered
+  }
+
   const defaultVisibility = useMemo(() => getDefaultVisibility(columns), [columns])
   const defaultOrder = useMemo(() => getColumnIds(columns), [columns])
 
@@ -123,21 +133,23 @@ export function DataTable<T>({
           onColumnOrderChange={setColumnOrder}
         />
       </div>
-      <div className="overflow-x-auto rounded-md border">
+      <div className="relative max-h-[70vh] overflow-auto rounded-md border">
         <Table>
-          <TableHeader>
+          <TableHeader className="sticky top-0 z-10 bg-background">
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
                 {headerGroup.headers.map((header) => {
                   const sorted = header.column.getIsSorted()
+                  const isRight = header.column.columnDef.meta?.align === "right"
                   return (
                   <TableHead
                     key={header.id}
-                    className={
+                    className={[
                       header.column.getCanSort()
                         ? "cursor-pointer select-none"
-                        : ""
-                    }
+                        : "",
+                      isRight ? "text-right" : "",
+                    ].filter(Boolean).join(" ")}
                     onClick={header.column.getToggleSortingHandler()}
                     onKeyDown={(e) => {
                       if (e.key === "Enter" || e.key === " ") {
@@ -155,13 +167,8 @@ export function DataTable<T>({
                           : undefined
                     }
                   >
-                    <div className="flex items-center gap-1">
-                      {header.isPlaceholder
-                        ? null
-                        : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext(),
-                          )}
+                    <div className={`flex items-center gap-1 ${isRight ? "justify-end" : ""}`}>
+                      {getHeaderLabel(header)}
                       {{
                         asc: " \u2191",
                         desc: " \u2193",
@@ -176,12 +183,18 @@ export function DataTable<T>({
           <TableBody>
             {table.getRowModel().rows.length ? (
               table.getRowModel().rows.map((row) => (
-                <TableRow key={row.id}>
-                  {row.getVisibleCells().map((cell) => (
-                    <TableCell key={cell.id}>
+                <TableRow key={row.id} className="even:bg-muted/30 hover:bg-muted/60">
+                  {row.getVisibleCells().map((cell) => {
+                    const isRight = cell.column.columnDef.meta?.align === "right"
+                    return (
+                    <TableCell
+                      key={cell.id}
+                      className={`py-2 px-3 ${isRight ? "text-right font-mono tabular-nums" : ""}`}
+                    >
                       {flexRender(cell.column.columnDef.cell, cell.getContext())}
                     </TableCell>
-                  ))}
+                    )
+                  })}
                 </TableRow>
               ))
             ) : (

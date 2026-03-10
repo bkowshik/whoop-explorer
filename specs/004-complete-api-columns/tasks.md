@@ -174,11 +174,11 @@
 
 ### Implementation for User Story 6
 
-- [x] T047 [US6] Add `user/body_measurement` to ALLOWED_PATHS in api/whoop/index.ts
+- [x] T047 [US6] Add `user/measurement/body` to ALLOWED_PATHS in api/whoop/index.ts
 - [x] T048 [US6] Add `fetchBodyMeasurement` function (non-paginated, single GET with mapper) and a `useBodyMeasurement` hook using TanStack Query's `useQuery` to call it in src/lib/whoop-api.ts
 - [x] T049 [US6] Create BodyMeasurements card component displaying height (m), weight (kg), and max HR (bpm) using existing Card UI component, with loading and null-value handling in src/components/body-measurements.tsx
 - [x] T050 [US6] Create a new Body page at src/pages/body.tsx that renders the BodyMeasurements component using the `useBodyMeasurement` hook, and add a "Body" nav tab to src/components/layout/nav-tabs.tsx and a route in src/App.tsx
-- [x] T051 [US6] Update proxy allowlist test to include `user/body_measurement` path in tests/api/proxy-allowlist.test.ts
+- [x] T051 [US6] Update proxy allowlist test to include `user/measurement/body` path in tests/api/proxy-allowlist.test.ts
 - [x] T052 [US6] Verify US6 tests pass: run `npm test` and confirm T045, T046, T051 tests are green
 
 **Checkpoint**: Body measurements card displays user's physical profile data. US6 complete.

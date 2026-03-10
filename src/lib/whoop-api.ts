@@ -179,7 +179,7 @@ export async function fetchBodyMeasurement(): Promise<BodyMeasurement> {
   const tokens = getTokens()
   if (!tokens) throw new Error("Not authenticated")
 
-  const res = await fetch(`${API_BASE}/user/body_measurement`, {
+  const res = await fetch(`${API_BASE}/user/measurement/body`, {
     headers: { Authorization: `Bearer ${tokens.accessToken}` },
   })
 

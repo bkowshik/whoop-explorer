@@ -9,19 +9,20 @@ import {
   formatDecimal,
   formatMeters,
   formatInteger,
+  formatNumber,
 } from "@/lib/formatters"
 
 describe("formatDuration", () => {
-  it("converts milliseconds to hours:minutes", () => {
-    expect(formatDuration(28800000)).toBe("8h 00m")
+  it("converts milliseconds to decimal hours", () => {
+    expect(formatDuration(28800000)).toBe("8.00")
   })
 
   it("handles minutes correctly", () => {
-    expect(formatDuration(5400000)).toBe("1h 30m")
+    expect(formatDuration(5400000)).toBe("1.50")
   })
 
   it("handles zero", () => {
-    expect(formatDuration(0)).toBe("0h 00m")
+    expect(formatDuration(0)).toBe("0.00")
   })
 
   it("returns dash for null", () => {
@@ -29,7 +30,11 @@ describe("formatDuration", () => {
   })
 
   it("handles minutes-only durations", () => {
-    expect(formatDuration(2700000)).toBe("0h 45m")
+    expect(formatDuration(2700000)).toBe("0.75")
+  })
+
+  it("handles 8h 15m as 8.25", () => {
+    expect(formatDuration(29700000)).toBe("8.25")
   })
 })
 
@@ -79,8 +84,8 @@ describe("formatDecimal", () => {
 })
 
 describe("formatMeters", () => {
-  it("converts meters to km", () => {
-    expect(formatMeters(8045)).toBe("8.0 km")
+  it("converts meters to km without unit suffix", () => {
+    expect(formatMeters(8045)).toBe("8.0")
   })
 
   it("returns dash for null", () => {
@@ -88,7 +93,7 @@ describe("formatMeters", () => {
   })
 
   it("handles zero", () => {
-    expect(formatMeters(0)).toBe("0.0 km")
+    expect(formatMeters(0)).toBe("0.0")
   })
 })
 
@@ -142,5 +147,35 @@ describe("formatInteger", () => {
 
   it("returns dash for null", () => {
     expect(formatInteger(null)).toBe("—")
+  })
+
+  it("formats large numbers with commas", () => {
+    expect(formatInteger(1234)).toBe("1,234")
+  })
+
+  it("formats very large numbers with commas", () => {
+    expect(formatInteger(12345678)).toBe("12,345,678")
+  })
+})
+
+describe("formatNumber", () => {
+  it("formats with comma separators and decimal places", () => {
+    expect(formatNumber(1234.5, 2)).toBe("1,234.50")
+  })
+
+  it("formats small numbers without commas", () => {
+    expect(formatNumber(500, 0)).toBe("500")
+  })
+
+  it("returns dash for null", () => {
+    expect(formatNumber(null, 2)).toBe("—")
+  })
+
+  it("handles zero", () => {
+    expect(formatNumber(0, 2)).toBe("0.00")
+  })
+
+  it("defaults to 0 decimal places", () => {
+    expect(formatNumber(1234)).toBe("1,234")
   })
 })

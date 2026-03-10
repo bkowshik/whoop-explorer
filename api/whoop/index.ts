@@ -9,7 +9,7 @@ const ALLOWED_PATHS = [
   "activity/recovery",
   "cycle",
   "recovery",
-  "user/body_measurement",
+  "user/measurement/body",
 ]
 
 export default async function handler(
@@ -44,7 +44,7 @@ export default async function handler(
     return res.status(403).json({ error: "Forbidden" })
   }
 
-  const url = new URL(`${WHOOP_BASE_URL}/${apiPath}`)
+  const url = new URL(`${WHOOP_BASE_URL}/${decodedPath}`)
   for (const [key, value] of Object.entries(req.query)) {
     if (key === "path") continue
     if (Array.isArray(value)) {

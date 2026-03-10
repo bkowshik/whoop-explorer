@@ -55,9 +55,9 @@
 
 ## R5: Body Measurement API Endpoint
 
-**Decision**: Add `user/body_measurement` to the API proxy allowlist and create a new `fetchBodyMeasurement()` function.
+**Decision**: Add `user/measurement/body` to the API proxy allowlist and create a new `fetchBodyMeasurement()` function.
 
-**Rationale**: The WHOOP API v2 endpoint is `GET /developer/v2/user/body_measurement`. This is a single-record endpoint (not paginated), so it doesn't use the `fetchCollection` pattern. A simple fetch function is appropriate.
+**Rationale**: The WHOOP API v2 endpoint is `GET /developer/v2/user/measurement/body`. This is a single-record endpoint (not paginated), so it doesn't use the `fetchCollection` pattern. A simple fetch function is appropriate.
 
 **Alternatives considered**:
 - Fetch directly from browser without proxy: Rejected — violates existing architecture where all WHOOP API calls go through the Vercel proxy for CORS.
