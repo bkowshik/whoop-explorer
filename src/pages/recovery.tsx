@@ -1,7 +1,7 @@
-import { useState } from "react"
-import type { DateRange, Recovery, SummaryStatItem } from "@/lib/types"
+import { useState, useMemo } from "react"
+import type { DateRange, Recovery, Cycle, SummaryStatItem } from "@/lib/types"
 import { useWhoopData } from "@/hooks/use-whoop-data"
-import { formatPercentage, formatDecimal, formatInteger } from "@/lib/formatters"
+import { formatPercentage, formatDecimal, formatInteger, formatDateTime } from "@/lib/formatters"
 import { DataTable } from "@/components/data-table"
 import { SummaryStats } from "@/components/summary-stats"
 import { recoveryColumns } from "@/components/tables/recovery-columns"
@@ -42,6 +42,15 @@ export function RecoveryPage() {
     "recovery",
     dateRange,
   )
+  const { data: cycles } = useWhoopData<Cycle>("cycles", dateRange)
+
+  const cycleLookup = useMemo(() => {
+    const map = new Map<number, string>()
+    for (const c of cycles) {
+      map.set(c.id, formatDateTime(c.start))
+    }
+    return map
+  }, [cycles])
 
   return (
     <AppShell dateRange={dateRange}>
@@ -62,7 +71,7 @@ export function RecoveryPage() {
         ) : (
           <>
             <SummaryStats items={getSummary(data)} isLoading={isLoading} />
-            <DataTable columns={recoveryColumns} data={data} isLoading={isLoading} />
+            <DataTable columns={recoveryColumns} data={data} isLoading={isLoading} tableId="recovery" meta={{ cycleLookup }} />
           </>
         )}
       </div>

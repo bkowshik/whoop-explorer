@@ -1,7 +1,7 @@
-import { useState } from "react"
-import type { DateRange, SleepRecord, SummaryStatItem } from "@/lib/types"
+import { useState, useMemo } from "react"
+import type { DateRange, SleepRecord, Cycle, SummaryStatItem } from "@/lib/types"
 import { useWhoopData } from "@/hooks/use-whoop-data"
-import { formatDuration, formatPercentage } from "@/lib/formatters"
+import { formatDuration, formatPercentage, formatDateTime } from "@/lib/formatters"
 import { DataTable } from "@/components/data-table"
 import { SummaryStats } from "@/components/summary-stats"
 import { sleepColumns } from "@/components/tables/sleep-columns"
@@ -40,6 +40,15 @@ export function SleepPage() {
     "sleep",
     dateRange,
   )
+  const { data: cycles } = useWhoopData<Cycle>("cycles", dateRange)
+
+  const cycleLookup = useMemo(() => {
+    const map = new Map<number, string>()
+    for (const c of cycles) {
+      map.set(c.id, formatDateTime(c.start))
+    }
+    return map
+  }, [cycles])
 
   return (
     <AppShell dateRange={dateRange}>
@@ -60,7 +69,7 @@ export function SleepPage() {
         ) : (
           <>
             <SummaryStats items={getSummary(data)} isLoading={isLoading} />
-            <DataTable columns={sleepColumns} data={data} isLoading={isLoading} />
+            <DataTable columns={sleepColumns} data={data} isLoading={isLoading} tableId="sleep" meta={{ cycleLookup }} />
           </>
         )}
       </div>

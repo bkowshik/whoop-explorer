@@ -67,7 +67,7 @@ export function WorkoutsPage() {
         ) : (
           <>
             <SummaryStats items={getSummary(data)} isLoading={isLoading} />
-            <DataTable columns={workoutsColumns} data={data} isLoading={isLoading} />
+            <DataTable columns={workoutsColumns} data={data} isLoading={isLoading} tableId="workouts" />
           </>
         )}
       </div>

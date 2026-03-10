@@ -10,6 +10,7 @@ import { SleepPage } from "@/pages/sleep"
 import { CyclesPage } from "@/pages/cycles"
 import { RecoveryPage } from "@/pages/recovery"
 import { WorkoutsPage } from "@/pages/workouts"
+import { BodyPage } from "@/pages/body"
 import { PrivacyPage } from "@/pages/privacy"
 
 function App() {
@@ -49,6 +50,14 @@ function App() {
               element={
                 <AuthGuard>
                   <WorkoutsPage />
+                </AuthGuard>
+              }
+            />
+            <Route
+              path="/body"
+              element={
+                <AuthGuard>
+                  <BodyPage />
                 </AuthGuard>
               }
             />

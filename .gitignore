@@ -16,4 +16,7 @@ coverage/
 .vercel/
 .specify/extensions/
 .claude/
+.agents/
+skills-lock.json
 .vercel
+.env*.local

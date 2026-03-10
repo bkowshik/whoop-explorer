@@ -62,7 +62,7 @@ export function CyclesPage() {
         ) : (
           <>
             <SummaryStats items={getSummary(data)} isLoading={isLoading} />
-            <DataTable columns={cyclesColumns} data={data} isLoading={isLoading} />
+            <DataTable columns={cyclesColumns} data={data} isLoading={isLoading} tableId="cycles" />
           </>
         )}
       </div>

@@ -43,3 +43,19 @@ export function formatInteger(value: number | null): string {
   if (value === null) return DASH
   return String(Math.round(value))
 }
+
+export function formatDateTime(iso: string | null | undefined): string {
+  if (!iso) return DASH
+  const date = new Date(iso)
+  return date.toLocaleDateString("en-US", {
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+  })
+}
+
+export function formatBoolean(value: boolean | null | undefined): string {
+  if (value === null || value === undefined) return DASH
+  return value ? "Yes" : "No"
+}

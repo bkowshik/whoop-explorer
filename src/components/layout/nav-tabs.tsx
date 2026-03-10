@@ -6,6 +6,7 @@ const tabs = [
   { value: "/cycles", label: "Cycles" },
   { value: "/recovery", label: "Recovery" },
   { value: "/workouts", label: "Workouts" },
+  { value: "/body", label: "Body" },
 ] as const
 
 export function NavTabs() {

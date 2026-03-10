@@ -31,7 +31,6 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/whoop/:path*", "destination": "/api/whoop?path=:path*" },
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    { "source": "/api/whoop/(.*)", "destination": "/api/whoop?path=$1" }
   ]
 }
