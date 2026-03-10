@@ -5,6 +5,8 @@ Auto-generated from all feature plans. Last updated: 2026-03-03
 ## Active Technologies
 - TypeScript 5.9 (strict mode) + React 19, TanStack Query v5, Vite 7, xlsx (SheetJS), Vercel serverless functions (002-security-audit)
 - localStorage (OAuth tokens), IndexedDB via idb-keyval (query cache) (002-security-audit)
+- TypeScript 5.9 (strict mode) + React 19, TanStack Table v8.21.3, TanStack Query v5, Vite 7, Tailwind CSS v4, Radix UI, lucide-react, idb-keyval (004-complete-api-columns)
+- localStorage (OAuth tokens, column preferences), IndexedDB via idb-keyval (query cache) (004-complete-api-columns)
 
 - TypeScript 5.x (strict mode) + React 18+, TanStack Query v5, (001-whoop-data-explorer)
 
@@ -25,6 +27,7 @@ npm test && npm run lint
 TypeScript 5.x (strict mode): Follow standard conventions
 
 ## Recent Changes
+- 004-complete-api-columns: Added TypeScript 5.9 (strict mode) + React 19, TanStack Table v8.21.3, TanStack Query v5, Vite 7, Tailwind CSS v4, Radix UI, lucide-react, idb-keyval
 - 002-security-audit: Added TypeScript 5.9 (strict mode) + React 19, TanStack Query v5, Vite 7, xlsx (SheetJS), Vercel serverless functions
 
 - 001-whoop-data-explorer: Added TypeScript 5.x (strict mode) + React 18+, TanStack Query v5,

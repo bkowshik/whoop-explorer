@@ -27,7 +27,7 @@ Privacy-first app to explore, download, and understand your WHOOP health data. A
 
 Create an app at the [WHOOP Developer Portal](https://developer.whoop.com):
 
-- Set the redirect URI to `http://localhost:5173/callback` (local) or `https://your-domain.vercel.app/callback` (production)
+- Set the redirect URI to `http://localhost:3000/callback` (local) or `https://your-domain.vercel.app/callback` (production)
 - Note your **Client ID** and **Client Secret**
 - Enable scopes: `offline`, `read:profile`, `read:cycles`, `read:sleep`, `read:recovery`, `read:workout`
 
@@ -42,8 +42,8 @@ Fill in your values:
 ```
 WHOOP_CLIENT_ID=your_client_id
 WHOOP_CLIENT_SECRET=your_client_secret
-REDIRECT_URI=http://localhost:5173/callback
-VITE_APP_URL=http://localhost:5173
+REDIRECT_URI=http://localhost:3000/callback
+VITE_APP_URL=http://localhost:3000
 VITE_WHOOP_CLIENT_ID=your_client_id
 ```
 
@@ -51,10 +51,12 @@ VITE_WHOOP_CLIENT_ID=your_client_id
 
 ```bash
 npm install
-npm run dev
+vercel dev
 ```
 
-> **Note:** The serverless API functions (`/api/*`) only work when deployed to Vercel. For local development, you can use `vercel dev` instead of `npm run dev`.
+> **Important:** You must use `vercel dev` (not `npm run dev`) for local development. The serverless API functions (`/api/*`) that handle OAuth and proxy WHOOP API requests only work through the Vercel dev server. Running `npm run dev` starts only the Vite frontend and API calls will fail with 404 errors.
+>
+> `vercel dev` starts on `http://localhost:3000` by default. Make sure your WHOOP app redirect URI and environment variables use port 3000, not 5173.
 
 ### 4. Deploy to Vercel
 
@@ -105,4 +107,4 @@ api/
 npm test
 ```
 
-27 unit tests covering formatters, auth token management, and API response mapping.
+85 unit tests covering formatters, auth token management, API response mapping, column preferences, and proxy allowlist.

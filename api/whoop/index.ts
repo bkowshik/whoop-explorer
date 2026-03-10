@@ -9,6 +9,7 @@ const ALLOWED_PATHS = [
   "activity/recovery",
   "cycle",
   "recovery",
+  "user/body_measurement",
 ]
 
 export default async function handler(

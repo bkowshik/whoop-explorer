@@ -8,6 +8,7 @@ const ALLOWED_PATHS = [
   "activity/recovery",
   "cycle",
   "recovery",
+  "user/body_measurement",
 ]
 
 function createMockReq(overrides: Record<string, unknown> = {}) {

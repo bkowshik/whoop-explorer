@@ -4,8 +4,11 @@ import {
   formatPercentage,
   formatKjToKcal,
   formatDate,
+  formatDateTime,
+  formatBoolean,
   formatDecimal,
   formatMeters,
+  formatInteger,
 } from "@/lib/formatters"
 
 describe("formatDuration", () => {
@@ -86,5 +89,58 @@ describe("formatMeters", () => {
 
   it("handles zero", () => {
     expect(formatMeters(0)).toBe("0.0 km")
+  })
+})
+
+describe("formatDateTime", () => {
+  it("formats ISO string to date and time", () => {
+    const result = formatDateTime("2026-03-10T22:30:00.000Z")
+    // Should include month, day, and time components
+    expect(result).toContain("Mar")
+    expect(result).toMatch(/\d{1,2}/)
+  })
+
+  it("returns dash for null", () => {
+    expect(formatDateTime(null)).toBe("—")
+  })
+
+  it("returns dash for undefined", () => {
+    expect(formatDateTime(undefined)).toBe("—")
+  })
+
+  it("returns dash for empty string", () => {
+    expect(formatDateTime("")).toBe("—")
+  })
+})
+
+describe("formatBoolean", () => {
+  it("returns Yes for true", () => {
+    expect(formatBoolean(true)).toBe("Yes")
+  })
+
+  it("returns No for false", () => {
+    expect(formatBoolean(false)).toBe("No")
+  })
+
+  it("returns dash for null", () => {
+    expect(formatBoolean(null)).toBe("—")
+  })
+
+  it("returns dash for undefined", () => {
+    expect(formatBoolean(undefined)).toBe("—")
+  })
+})
+
+describe("formatInteger", () => {
+  it("formats integer value", () => {
+    expect(formatInteger(42)).toBe("42")
+  })
+
+  it("rounds decimal value", () => {
+    expect(formatInteger(42.7)).toBe("43")
+  })
+
+  it("returns dash for null", () => {
+    expect(formatInteger(null)).toBe("—")
   })
 })
