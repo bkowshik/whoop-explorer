@@ -1,5 +1,6 @@
 import { type ColumnDef } from "@tanstack/react-table"
 import type { Recovery } from "@/lib/types"
+import "@/lib/table-types"
 import {
   formatDateTime,
   formatPercentage,
@@ -64,37 +65,34 @@ export const recoveryColumns: ColumnDef<Recovery, unknown>[] = [
     accessorKey: "recoveryScore",
     header: "Recovery",
     cell: ({ getValue }) => formatPercentage(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right" },
   },
   {
     id: "restingHeartRate",
     accessorKey: "restingHeartRate",
     header: "Resting HR",
     cell: ({ getValue }) => formatInteger(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right", unit: "bpm" },
   },
   {
     id: "hrvRmssdMs",
     accessorKey: "hrvRmssdMs",
     header: "HRV",
     cell: ({ getValue }) => formatDecimal(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right", unit: "ms" },
   },
   {
     id: "spo2Pct",
     accessorKey: "spo2Pct",
     header: "SpO2",
     cell: ({ getValue }) => formatPercentage(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right" },
   },
   {
     id: "skinTempCelsius",
     accessorKey: "skinTempCelsius",
     header: "Skin Temp",
-    cell: ({ getValue }) => {
-      const v = getValue() as number | null
-      return v !== null ? `${v.toFixed(1)}°C` : "—"
-    },
-    meta: { defaultVisible: true },
+    cell: ({ getValue }) => formatDecimal(getValue() as number | null),
+    meta: { defaultVisible: true, align: "right", unit: "°C" },
   },
 ]

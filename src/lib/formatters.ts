@@ -2,10 +2,8 @@ const DASH = "—"
 
 export function formatDuration(ms: number | null): string {
   if (ms === null) return DASH
-  const totalMinutes = Math.round(ms / 60000)
-  const hours = Math.floor(totalMinutes / 60)
-  const minutes = totalMinutes % 60
-  return `${hours}h ${String(minutes).padStart(2, "0")}m`
+  const hours = ms / 3600000
+  return hours.toFixed(2)
 }
 
 export function formatPercentage(value: number | null): string {
@@ -36,12 +34,28 @@ export function formatDecimal(
 export function formatMeters(meters: number | null): string {
   if (meters === null) return DASH
   const km = meters / 1000
-  return `${km.toFixed(1)} km`
+  return km.toFixed(1)
 }
+
+const integerFormatter = new Intl.NumberFormat("en-US", {
+  maximumFractionDigits: 0,
+})
 
 export function formatInteger(value: number | null): string {
   if (value === null) return DASH
-  return String(Math.round(value))
+  return integerFormatter.format(Math.round(value))
+}
+
+export function formatNumber(
+  value: number | null,
+  decimalPlaces: number = 0,
+): string {
+  if (value === null) return DASH
+  const formatter = new Intl.NumberFormat("en-US", {
+    minimumFractionDigits: decimalPlaces,
+    maximumFractionDigits: decimalPlaces,
+  })
+  return formatter.format(value)
 }
 
 export function formatDateTime(iso: string | null | undefined): string {

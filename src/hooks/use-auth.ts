@@ -4,7 +4,7 @@ import { storeTokens, getTokens, isTokenExpired, clearAllData } from "@/lib/auth
 import { queryClient } from "@/lib/query-config"
 
 const WHOOP_AUTH_URL = "https://api.prod.whoop.com/oauth/oauth2/auth"
-const SCOPES = "offline read:profile read:cycles read:sleep read:recovery read:workout"
+const SCOPES = "offline read:profile read:body_measurement read:cycles read:sleep read:recovery read:workout"
 const STATE_KEY = "whoop_oauth_state"
 
 function generateState(): string {

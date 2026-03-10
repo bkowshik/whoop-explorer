@@ -1,11 +1,19 @@
 import { type ColumnDef } from "@tanstack/react-table"
 import type { Cycle } from "@/lib/types"
+import "@/lib/table-types"
 import {
   formatDateTime,
   formatDecimal,
   formatKjToKcal,
   formatInteger,
+  formatDuration,
 } from "@/lib/formatters"
+
+export function computeCycleDurationHours(row: Cycle): number | null {
+  if (!row.start || !row.end) return null
+  const ms = new Date(row.end).getTime() - new Date(row.start).getTime()
+  return ms / 3600000
+}
 
 export const cyclesColumns: ColumnDef<Cycle, unknown>[] = [
   {
@@ -27,6 +35,17 @@ export const cyclesColumns: ColumnDef<Cycle, unknown>[] = [
     header: "End",
     cell: ({ getValue }) => formatDateTime(getValue() as string),
     meta: { defaultVisible: true },
+  },
+  {
+    id: "duration",
+    header: "Duration",
+    accessorFn: (row) => {
+      const hours = computeCycleDurationHours(row)
+      if (hours === null) return null
+      return hours * 3600000
+    },
+    cell: ({ getValue }) => formatDuration(getValue() as number | null),
+    meta: { defaultVisible: true, align: "right", unit: "hrs" },
   },
   {
     id: "timezoneOffset",
@@ -59,27 +78,27 @@ export const cyclesColumns: ColumnDef<Cycle, unknown>[] = [
     accessorKey: "strain",
     header: "Strain",
     cell: ({ getValue }) => formatDecimal(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right" },
   },
   {
     id: "kilojoule",
     accessorKey: "kilojoule",
     header: "Calories",
     cell: ({ getValue }) => formatKjToKcal(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right", unit: "kcal" },
   },
   {
     id: "averageHeartRate",
     accessorKey: "averageHeartRate",
     header: "Avg HR",
     cell: ({ getValue }) => formatInteger(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right", unit: "bpm" },
   },
   {
     id: "maxHeartRate",
     accessorKey: "maxHeartRate",
     header: "Max HR",
     cell: ({ getValue }) => formatInteger(getValue() as number | null),
-    meta: { defaultVisible: true },
+    meta: { defaultVisible: true, align: "right", unit: "bpm" },
   },
 ]

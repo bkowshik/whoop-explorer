@@ -29,16 +29,16 @@ export function BodyMeasurements({ data, isLoading }: BodyMeasurementsProps) {
 
   const items = [
     {
-      label: "Height",
-      value: data?.heightMeter != null ? `${data.heightMeter.toFixed(2)} m` : DASH,
+      label: "Height (m)",
+      value: data?.heightMeter != null ? data.heightMeter.toFixed(2) : DASH,
     },
     {
-      label: "Weight",
-      value: data?.weightKilogram != null ? `${data.weightKilogram.toFixed(1)} kg` : DASH,
+      label: "Weight (kg)",
+      value: data?.weightKilogram != null ? data.weightKilogram.toFixed(1) : DASH,
     },
     {
-      label: "Max Heart Rate",
-      value: data?.maxHeartRate != null ? `${data.maxHeartRate} bpm` : DASH,
+      label: "Max Heart Rate (bpm)",
+      value: data?.maxHeartRate != null ? String(data.maxHeartRate) : DASH,
     },
   ]
 
